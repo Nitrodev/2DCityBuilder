@@ -1,0 +1,14 @@
+#canvas {
+  border: 1px solid black;
+  padding: 1px;
+}
+
+#structures {
+  display: inline;
+  vertical-align: top;
+}
+
+.structure {
+  width: 60px;
+  height: 60px;
+}
