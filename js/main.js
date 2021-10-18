@@ -3,6 +3,7 @@ const mousePos = document.querySelector("#pos");
 const ctx = canvas.getContext("2d");
 const cRect = canvas.getBoundingClientRect();
 
+let selected = false; // FIX THIS LATER
 let selectedImg = new Image(32, 32);
 let builtImg = new Image(32, 32);
 
@@ -36,6 +37,7 @@ function draw() {
 function startBuilding(structure) {
   switch (structure) {
     case 'road':
+      selected = true;
       selectedImg.src = 'img/roadEW.png'
       break;
   }
@@ -53,19 +55,22 @@ canvas.addEventListener('mousemove', (e) => {
 canvas.addEventListener('click', (e) => {
   let posX = Math.floor(getMousePos(cRect, e).x/32);
   let posY = Math.floor(getMousePos(cRect, e).y/32);
-  if(selectedImg.src == 'img/select.png') {
+  if(selected == false) {
     return;
   } else {
-    let built = new Structure(selectedImg.src)
-    draw();
+    let built = new Structure(selectedImg.src);
     map[posX][posY].structure = built;
+    draw();
   }
 
 });
 
 // Clear selected image
 document.addEventListener('keydown', (e) => {
-  if(e.code == 'Escape') selectedImg.src = 'img/select.png';
+  if(e.code == 'Escape') {
+    selected = false;
+    selectedImg.src = 'img/select.png';
+  }
 });
 
 console.log(map);
