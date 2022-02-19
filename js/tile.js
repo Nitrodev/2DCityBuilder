@@ -39,11 +39,20 @@ class Structure {
       map[x-1][y].structure  // West
     ];
 
+    let score = 0;
+    
+
     if(dir == 'EW') {
-      if(neighbors[0].img.slice(-2) == 'NS') {
+      if(neighbors[0].name == this.name) {
         this.img = this.name+'NE';
-      } else if(neighbors[2].img.slice(-2) == 'NS') {
+      } else if(neighbors[2].name == this.name) {
         this.img = this.name+'ES';
+      }
+    } else if(dir == 'NS') {
+      if(neighbors[1].name == this.name) {
+        this.img = this.name+'NE';
+      } else if(neighbors[3].name == this.name) {
+        this.img = this.name+'NW';
       }
     }
 
