@@ -3,16 +3,22 @@ const mousePos = document.querySelector("#pos");
 const ctx = canvas.getContext("2d");
 const cRect = canvas.getBoundingClientRect();
 
+// WORLD SETTINGS
+const size = 10;
+
 let selected = {}; // FIX THIS LATER
 let builtImg;
 
-let map = create2DArray(10);
+let map = create2DArray(size);
 
 function setup() {
+  canvas.width = size*32;
+  canvas.height = size*32;
+
   selected.img = selected.name = 'select';
   images.loadSpriteSheet('./sprites.json');
-  for(let x = 0; x < 10; x++) {
-    for(let y = 0; y < 10; y++) {
+  for(let x = 0; x < size; x++) {
+    for(let y = 0; y < size; y++) {
       map[x][y] = new Tile(x, y);
     }
   }
@@ -20,8 +26,8 @@ function setup() {
 }
 
 function draw() {
-  for (let x = 0; x < 10; x++) {
-    for (let y = 0; y < 10; y++) {
+  for (let x = 0; x < size; x++) {
+    for (let y = 0; y < size; y++) {
       if(map[x][y].structure == null) {
         ctx.beginPath();
         ctx.fillStyle = map[x][y].terrain.color;
