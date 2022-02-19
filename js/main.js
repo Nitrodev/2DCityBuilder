@@ -3,12 +3,13 @@ const mousePos = document.querySelector("#pos");
 const ctx = canvas.getContext("2d");
 const cRect = canvas.getBoundingClientRect();
 
-let selected = 'select'; // FIX THIS LATER
+let selected = {}; // FIX THIS LATER
 let builtImg;
 
 let map = create2DArray(10);
 
 function setup() {
+  selected.img = selected.name = 'select';
   images.loadSpriteSheet('./sprites.json');
   for(let x = 0; x < 10; x++) {
     for(let y = 0; y < 10; y++) {
@@ -36,7 +37,8 @@ function draw() {
 function startBuilding(structure) {
   switch (structure) {
     case 'road':
-      selected = structure+'EW';
+      selected.name = structure;
+      selected.img = structure+'EW';
       break;
   }
 }
@@ -46,17 +48,17 @@ canvas.addEventListener('mousemove', (e) => {
   let posX = Math.floor(getMousePos(cRect, e).x/32);
   let posY = Math.floor(getMousePos(cRect, e).y/32);
   draw();
-  images.draw(ctx, selected, posX*32, posY*32);
-  mousePos.innerHTML = `X: ${posX} | Y: ${posY} \n Selected: ${selected || 'Nothing'}`;
+  images.draw(ctx, selected.img, posX*32, posY*32);
+  mousePos.innerHTML = `X: ${posX} | Y: ${posY} \n Selected: ${selected.name || 'Nothing'}`;
 });
 
 canvas.addEventListener('click', (e) => {
   let posX = Math.floor(getMousePos(cRect, e).x/32);
   let posY = Math.floor(getMousePos(cRect, e).y/32);
-  if(selected == 'select') {
+  if(selected.img == 'select') {
     return;
   } else {
-    let built = new Structure(selected);
+    let built = new Structure(selected.name, selected.img);
     map[posX][posY].structure = built;
     draw();
   }
@@ -65,8 +67,18 @@ canvas.addEventListener('click', (e) => {
 
 // Clear selected image
 document.addEventListener('keydown', (e) => {
-  if(e.code == 'Escape') {
-    selected = 'select';
+  switch (e.code) {
+    case 'Escape':
+      selected.img = selected.name = 'select';
+      break;
+  
+    case 'KeyR':
+      if(selected.img == selected.name+'EW') {
+        selected.img = selected.name+'NS';
+      } else if(selected.img == selected.name+'NS') {
+        selected.img = selected.name+'EW';
+      }
+      break;
   }
 });
 

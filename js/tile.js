@@ -3,16 +3,25 @@ const TERRAIN = {
 };
 
 class Tile {
-  structure = null;
+  _structure = null;
 	constructor(x, y) {
   	this.x = x;
     this.y = y;
     this.terrain = TERRAIN.GRASS;
   }
+
+  set structure(value) {
+    this._structure = value;
+  }
+
+  get structure() {
+    return this._structure;
+  }
 }
 
 class Structure {
-  constructor(img) {
+  constructor(name, img) {
+    this.name = name;
     this.img = img;
   }
 }
