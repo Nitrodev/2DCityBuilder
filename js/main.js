@@ -39,6 +39,7 @@ function startBuilding(structure) {
     case 'road':
       selected.name = structure;
       selected.img = structure+'EW';
+      selected.connects = true;
       break;
   }
 }
@@ -58,7 +59,7 @@ canvas.addEventListener('click', (e) => {
   if(selected.img == 'select') {
     return;
   } else {
-    let built = new Structure(selected.name, selected.img);
+    let built = new Structure(selected.name, selected.img, selected.connects);
     map[posX][posY].structure = built;
     draw();
   }
