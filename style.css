@@ -3,11 +3,11 @@
 }
 
 #structures {
-  display: inline;
+  display: inline-flex;
   vertical-align: top;
 }
 
 .structure {
-  width: 60px;
-  height: 60px;
+  width: fit-content;
+  height: fit-content;
 }

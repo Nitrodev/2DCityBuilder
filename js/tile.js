@@ -12,7 +12,7 @@ class Tile {
 
   set structure(value) {
     this._structure = value;
-    value.checkNeighbors(this.x, this.y);
+    value?.checkNeighbors(this.x, this.y);
   }
 
   get structure() {
@@ -39,9 +39,11 @@ class Structure {
     ];
 
     let score = 0;
-    for (let i = 0; i < 4; i++)
-      if (neighbors[i]?.name === this.name)
-        score += 2 ** i
+    for (let i = 0; i < 4; i++) {
+      if (neighbors[i]?.name === this.name) {
+        score += 2 ** i;
+      }
+    }
 
     switch (score) {
       case 0:

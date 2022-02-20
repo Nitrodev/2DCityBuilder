@@ -6,8 +6,7 @@ const cRect = canvas.getBoundingClientRect();
 // WORLD SETTINGS
 const size = 10;
 
-let selected = {}; // FIX THIS LATER
-let builtImg;
+let selected = {};
 
 let map = create2DArray(size);
 
@@ -50,6 +49,10 @@ function startBuilding(structure) {
   }
 }
 
+function demolish() {
+  selected.name = selected.img = 'demolish';
+}
+
 // EVENTS
 canvas.addEventListener('mousemove', (e) => {
   let posX = Math.floor(getMousePos(cRect, e).x/32);
@@ -64,6 +67,10 @@ canvas.addEventListener('click', (e) => {
   let posY = Math.floor(getMousePos(cRect, e).y/32);
   if(selected.img == 'select') {
     return;
+  } if(selected.img == 'demolish') {
+    if(map[posX][posY]?.structure != null) {
+      map[posX][posY].structure = null;
+    }
   } else {
     let built = new Structure(selected.name, selected.img, selected.connects);
     map[posX][posY].structure = built;
